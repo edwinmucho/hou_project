@@ -1,0 +1,121 @@
+<div id="header" class="sticky header-sm clearfix">
+	<!-- TOP NAV -->
+	<header id="topNav">
+		<div class="container">
+
+			<!-- Mobile Menu Button -->
+			<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+				<i class="fa fa-bars"></i>
+			</button>
+
+			<!-- BUTTONS -->
+			<ul class="pull-right nav nav-pills nav-second-main">
+
+				<!-- SEARCH -->
+				<li class="search">
+					<a href="javascript:;">
+						<i class="fa fa-search"></i>
+					</a>
+					<div class="search-box">
+						<form action="page-search-result-1.html" method="get">
+							<div class="input-group">
+								<input type="text" name="src" placeholder="Search" class="form-control">
+								<span class="input-group-btn">
+									<button class="btn btn-primary" type="submit">Search</button>
+								</span>
+							</div>
+						</form>
+					</div>
+				</li>
+				<!-- /SEARCH -->
+
+				<!-- QUICK SHOP CART -->
+				<li class="quick-cart">
+					<a>
+						<i class="fa fa-user"></i>
+					</a>
+					<div class="quick-cart-box">
+						<% if current_user %>
+							<h4><i class="fa fa-user"></i> <%= current_user.email %></h4>
+
+							<div class="quick-cart-wrapper">
+								<div class="pl-15 pr-15 pt-15 pb-15">
+									<span class="pull-left">You have <strong><%= current_user.boards.length%> BOARDS</strong></span>
+								</div>
+							</div>
+
+							<!-- quick cart footer -->
+							<div class="quick-cart-footer clearfix ">
+								<%#= link_to 'EDIT', edit_user_registration_path,  class: "btn btn-info btn-xs" %>
+								<%= link_to 'LOG OUT', destroy_user_session_path, method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "#{current_user.email} 로그아웃"} %>
+							</div>
+						<% end %>
+					</div>
+				</li>
+				<!-- /QUICK SHOP CART -->
+
+			</ul>
+			<!-- /BUTTONS -->
+
+			<!-- Logo -->
+			<a class="logo" href="<%= root_path %>">
+				<img src="<%= asset_path 'logo.png' %>" alt="">
+			</a>
+
+			<!--
+				Top Nav
+
+				AVAILABLE CLASSES:
+				submenu-dark = dark sub menu
+			-->
+			<div class="navbar-collapse nav-main-collapse collapse">
+				<nav class="nav-main">
+
+					<!--
+						NOTE
+
+						For a regular link, remove "dropdown" class from LI tag and "dropdown-toggle" class from the href.
+						Direct Link Example:
+
+						<li>
+							<a href="#">HOME</a>
+						</li>
+					-->
+
+					<ul id="topMain" class="nav nav-pills nav-main">
+						<li class="dropdown">
+							<a class="dropdown-toggle">
+								Boards
+							</a>
+							<ul class="dropdown-menu">
+									<% @boards.each do |board| %>
+										<li><%= link_to board.title, board_path(board) %></li>
+									<% end %>
+							</ul>
+						</ul>
+
+						<!--
+							MENU ANIMATIONS
+								.nav-animate-fadeIn
+								.nav-animate-fadeInUp
+								.nav-animate-bounceIn
+								.nav-animate-bounceInUp
+								.nav-animate-flipInX
+								.nav-animate-flipInY
+								.nav-animate-zoomIn
+								.nav-animate-slideInUp
+
+								.nav-hover-animate 		= animate text on hover
+
+								.hover-animate-bounceIn = bounceIn effect on mouse over of main menu
+						-->
+
+
+				</nav>
+			</div>
+
+		</div>
+	</header>
+	<!-- /Top Nav -->
+
+</div>

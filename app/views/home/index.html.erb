@@ -1,0 +1,120 @@
+<section class="page-header page-header-xs">
+	<div class="container">
+		<div id="active_new_board_form" class="row pull-right">
+			<div class="col-lg-2 col-md-3 col-sm-4 pull-right">
+				<button id="active_button" class="btn btn-outline-default text-center"><i class="fa fa-plus"></i></button>
+			</div>
+		</div>
+
+		<div class="col-lg-offset-2 col-lg-8 col-mg-12 col-sm-12 col-xs-12">
+			<form id="new_board" class="row">
+				<div class="col-lg-10 col-mg-10 col-sm-10 col-xs-12">
+					<input type="text" id="new_board_title" class="form-control" placeholder="Board 이름을 입력해 주세요"/>
+					<input type="hidden" id="user_id"  value="<%=current_user.id%>"/>
+				</div>
+
+				<div class="col-lg-2 col-mg-1 col-sm-2 col-xs-12 button-group text-right">
+					<input type="submit" id="create_button" class="btn btn-primary" value="만들기"/>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</section>
+
+<section id="star">
+	<div class="container">
+		<h3 class="lead"><i class="fa fa-star-o"></i> Starred Boards </h3>
+	</div>
+</section>
+
+<section id="basic">
+	<div class="container">
+		<h3 class="lead"><i class="fa fa-pencil-square-o"></i> Your Boards </h3>
+
+		<div id="basic_boards" class="row">
+			<% @boards.each do |board| %>
+				<%= render partial: "boards/board_card", locals: { board: board } %>
+			<% end %>
+		</div>
+
+	</div>
+</section>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		// Board create부분
+		var active = $('#active_new_board_form');
+		var newBoardForm = $('#new_board');
+
+		active.show();
+		newBoardForm.hide();
+
+		console.log(101);
+
+		$('#active_button').on('click', function() {
+			active.hide();
+			newBoardForm.show();
+		});
+
+		newBoardForm.on('submit', function(event){
+			event.preventDefault();
+
+			$.ajax({
+				url: "<%= boards_path %>",
+				type: "POST",
+				data: {
+					board: {
+						title: $("#new_board_title").val(),
+						user_id: $("#user_id").val(),
+						starred: false
+					}
+				},
+				success: function(result){
+			         render_js(result);
+			  }
+			});
+		});
+
+		// form 없애기
+    $(document).mouseup(function (e) {
+
+			var active = $('#active_new_board_form');
+			var newBoardForm = $('#new_board');
+
+
+      if (newBoardForm.has(e.target).length === 0){
+				active.show();
+				newBoardForm.hide();
+      }
+    });
+
+	});
+
+	function render_js(data){
+		var active = $('#active_new_board_form');
+		var newBoardForm = $('#new_board');
+
+		console.log(222);
+
+		var new_board = "";
+
+		new_board += "<div class='col-lg-3 col-md-4 col-sm-6'>";
+		new_board += "  <div class='thumbnail'>";
+		new_board += "    <div class='caption'>";
+		new_board += "			<ul class='list-inline categories nomargin text-right size-11'>";
+		new_board += "				<li><a class='text-danger' data-confirm='"+ data.title +"을 삭제합니다.' rel='nofollow' data-method='delete' href='/boards/" + data.id + "'><i class='fa fa-close'></i></a></li>";
+		new_board += "			</ul>";
+		new_board += "      <h4 class='nomargin board_title'><a href='/boards/" + data.id + "'>" + data.title + "</a></h4>";
+		new_board += "      <small class='margin-bottom-10 block text-right'>"+ data.created_at +"</small>";
+		new_board += "		</div>";
+		new_board += "	</div>";
+		new_board += "</div>";
+
+		$('#basic_boards').append(new_board);
+
+		$('#new_board_title').val("");
+		active.show();
+		newBoardForm.hide();
+	}
+</script>

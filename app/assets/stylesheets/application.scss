@@ -1,0 +1,76 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+@import "bootstrap";
+
+@import "essentials";
+@import "layout";
+@import "header-1";
+@import "color_scheme/orange";
+
+@import "toastr";
+
+.text_hide {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.board-wrapper {
+  height: 100%;
+}
+
+.board-canvas {
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  height: 100%;
+
+  padding:15px;
+	background-color:rgba(0,0,0,0.05);
+}
+
+
+.list-wrapper {
+  display: inline-block;
+  margin-right: 15px;
+  width: 400px;
+
+  height: 100%;
+
+  vertical-align: top;
+}
+
+.list {
+    background: #fff;
+
+    padding:15px;
+    line-height:17px;
+}
+
+.bookmark_list h1,
+.bookmark_list h2,
+.bookmark_list h3,
+.bookmark_list h4,
+.bookmark_list h5,
+.bookmark_list h6 {
+	font-size:14px;
+	line-height:17px;
+	padding-bottom:12px;
+	border-bottom:rgba(0,0,0,0.1) 1px solid;
+	margin-bottom:15px;
+}
